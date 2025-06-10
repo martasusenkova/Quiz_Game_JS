@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  /* background-image: url(/bcg.png); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #dfe0f9;
+  color: aliceblue;
+}
+
+.start__button,
+.info__box {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.info__box {
+  flex-direction: column;
+  background-color: rgb(76, 0, 61);
+  width: fit-content;
+  padding: 15px 30px;
+  border-radius: 25px;
+  display: none;
+}
+
+.info__box .info__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  height: 60px;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
+  border-bottom: 1px solid rgb(202, 205, 255);
+  color: rgb(145, 251, 122);
+}
+
+.info__box .info__list {
+  padding: 15px 35px;
+}
+
+.info__box .info__list .info__list-item {
+  margin: 5px 0;
+  font-size: 18px;
+  width: fit-content;
+}
+
+.info__box .info__list .info__list-item span {
+  font-weight: 500;
+  color: rgb(145, 251, 122);
+}
+
+.info__box .button {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 35px;
+  border-top: 1px solid rgb(202, 205, 255);
+}
+
+.info__box .button button {
+  margin: 0 5px;
+  height: 40px;
+  width: 100px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3 ease;
+}
+
+.button button.button__quit {
+  background-color: rgb(212, 209, 249);
+}
+
+.button button.button__quit:hover {
+  background-color: rgb(172, 17, 234);
+}
+.button button.button__restart {
+  background-color: rgb(145, 251, 122);
+}
+
+.button button.button__restart:hover {
+  background-color: rgb(0, 208, 90);
+}
+/* start quiz button styles */
+
+.start__button button {
+  font-size: 25px;
+  font-weight: 500;
+  color: rgb(13, 30, 84);
+  padding: 15px 30px;
+  border-radius: 25px;
+  border: transparent;
+  outline: none;
+  background-color: rgb(5, 31, 158);
+  cursor: pointer;
+  color: aliceblue;
+}
