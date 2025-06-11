@@ -3,8 +3,14 @@ const infoBox = document.querySelector(".info__box");
 const quitButton = infoBox.querySelector(".button__quit");
 const continueButton = infoBox.querySelector(".button__restart");
 const quizBox = document.querySelector(".quiz__box");
-
 const optionList = document.querySelector(".option__list");
+const timeCount = quizBox.querySelector(".timer .timer__sec");
+
+let queCount = 0;
+let queNumb = 1;
+let counter;
+let time = 15;
+
 startButton.onclick = () => {
   infoBox.classList.add("activeInfo");
 };
@@ -16,12 +22,9 @@ quitButton.onclick = () => {
 continueButton.onclick = () => {
   infoBox.classList.remove("activeInfo");
   quizBox.classList.add("activeQuiz");
-  showQuestions(0);
-  queCounter(1);
+  showQuestions(queCount);
+  queCounter(queNumb);
 };
-
-let queCount = 0;
-let queNumb = 1;
 
 const nextButton = quizBox.querySelector(".next__button");
 nextButton.onclick = () => {
@@ -30,72 +33,109 @@ nextButton.onclick = () => {
     queNumb++;
     showQuestions(queCount);
     queCounter(queNumb);
+    startTimer(15);
   } else {
     console.log("Questions completed");
   }
 };
-//getting questions and options from array
 
 function showQuestions(index) {
   const queText = document.querySelector(".que__text");
-  const optionList = document.querySelector(".option__list");
-  let queTag =
-    "<span>" +
-    questions[index].numb +
-    "." +
-    questions[index].question +
-    "</span>";
-  let optionTag =
-    '<div class="option">' +
-    questions[index].options[0] +
-    "<span></span></div>" +
-    '<div class="option">' +
-    questions[index].options[1] +
-    "<span></span></div>" +
-    '<div class="option">' +
-    questions[index].options[2] +
-    "<span></span></div>" +
-    '<div class="option">' +
-    questions[index].options[3] +
-    "<span></span></div>";
+  optionList.classList.remove("answered"); // сброс состояния "отвечено"
+
+  let queTag = `<span>${questions[index].numb}. ${questions[index].question}</span>`;
+  let optionTag = questions[index].options
+    .map((opt) => `<div class="option">${opt}<span></span></div>`)
+    .join("");
+
   queText.innerHTML = queTag;
   optionList.innerHTML = optionTag;
-  const option = optionList.querySelectorAll(".option");
-  for (let i = 0; i < option.length; i++) {
-    option[i].setAttribute("onclick", "optionSelected(this)");
-  }
+
+  const options = optionList.querySelectorAll(".option");
+  options.forEach((option) => {
+    option.setAttribute("onclick", "optionSelected(this)");
+  });
 }
 
 function optionSelected(answer) {
-  let userAns = answer.textContent;
-  let correctAns = questions[queCount].answer;
-  let allOptions = optionList.children.length;
-  if (userAns == correctAns) {
-    console.log("Answer is correct");
+  const correctAns = questions[queCount].answer;
+  const allOptions = optionList.children;
+
+  if (optionList.classList.contains("answered")) return;
+
+  for (let i = 0; i < allOptions.length; i++) {
+    const option = allOptions[i];
+    option.classList.remove("correct", "incorrect", "disabled");
+    const oldIcon = option.querySelector("svg.icon");
+    if (oldIcon) oldIcon.remove();
+  }
+
+  const tickIcon = `
+    <svg class="icon tick" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" viewBox="0 0 24 24">
+      <path d="M20.285 6.709l-11.285 11.292-5.285-5.292 1.414-1.414 3.871 3.878 9.871-9.878z"/>
+    </svg>`;
+
+  const crossIcon = `
+    <svg class="icon cross" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#c33" viewBox="0 0 24 24">
+      <path d="M18.3 5.71L12 12.01 5.71 5.71 4.29 7.12 10.59 13.41 4.29 19.7 5.71 21.12 12 14.83 18.29 21.12 19.71 19.7 13.41 13.41 19.71 7.12z"/>
+    </svg>`;
+
+  const userAns = answer.textContent.trim();
+
+  if (userAns === correctAns) {
     answer.classList.add("correct");
+    answer.insertAdjacentHTML("beforeend", tickIcon);
   } else {
     answer.classList.add("incorrect");
-    console.log("Answer is wrong");
+    answer.insertAdjacentHTML("beforeend", crossIcon);
 
-    for (let i = 0; i < allOptions; i++) {
-      if (optionList.children[i].textContent == correctAns) {
-        optionList.children[i].setAttribute("class", "option correct");
+    for (let i = 0; i < allOptions.length; i++) {
+      const option = allOptions[i];
+      if (option.textContent.trim() === correctAns) {
+        option.classList.add("correct");
+        option.insertAdjacentHTML("beforeend", tickIcon);
+        break;
       }
     }
-
-    for (let index = 0; index < allOptions; i++) {
-      const element = array[index];
-      optionList.children[i].classList.add("disabled");
-    }
   }
+
+  for (let i = 0; i < allOptions.length; i++) {
+    allOptions[i].classList.add("disabled");
+  }
+
+  optionList.classList.add("answered");
 }
+
 function queCounter(index) {
   const bottomQuesCounter = quizBox.querySelector(".total__que");
-  let totalQuesCountTag =
-    "<span><p>" +
-    index +
-    "</p>of<p>" +
-    questions.length +
-    "</p>Questions</span>";
+  let totalQuesCountTag = `<span><p>${index}</p>of<p>${questions.length}</p>Questions</span>`;
   bottomQuesCounter.innerHTML = totalQuesCountTag;
 }
+
+function startTimer() {
+  clearInterval(counter); // Останавливаем предыдущий таймер
+  time = 15; // Сбрасываем время
+  timeCount.textContent = time; // Отображаем начальное время
+
+  counter = setInterval(() => {
+    time--;
+    timeCount.textContent = time;
+
+    if (time < 0) {
+      clearInterval(counter); // Останавливаем таймер на 0
+      timeCount.textContent = "0";
+    }
+  }, 1000);
+}
+
+// Первый запуск таймера
+startTimer();
+// При клике на кнопку "Next Question"
+continueButton.addEventListener("click", () => {
+  startTimer();
+});
+
+nextBtn.addEventListener("click", () => {
+  startTimer(); // Заново запускаем таймер
+  // Здесь можешь вызвать свою функцию, которая показывает следующий вопрос
+});

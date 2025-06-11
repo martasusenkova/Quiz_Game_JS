@@ -30,7 +30,6 @@ body {
 .start__button {
   opacity: 1;
   z-index: 1;
-
   box-shadow: none;
   cursor: pointer;
 }
@@ -127,6 +126,7 @@ body {
   background-color: rgb(98, 112, 179);
   cursor: pointer;
   color: aliceblue;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8), 0 6px 20px 0 rgba(0, 0, 0, 0.7);
 }
 
 .quiz__box {
@@ -245,6 +245,15 @@ section .option__list .option:hover {
   z-index: 30;
 }
 
+.option__list {
+  position: relative;
+}
+
+.option__list svg {
+  z-index: 30;
+  position: absolute;
+}
+
 .option__list .option .icon.tick {
   border-color: rgb(38, 198, 20);
   color: rgb(66, 238, 63);
@@ -259,13 +268,13 @@ section .option__list .option:hover {
 
 .option__list .option.correct {
   color: green;
-  background-color: #bbeaca;
-  border-color: #e7e5f8;
+  background-color: #a9f3a6;
+  border: 2px solid #52d180;
 }
 .option__list .option.incorrect {
   color: rgb(211, 16, 16);
   background-color: #ffb9b8;
-  border-color: #e7e5f8;
+  border: 2px solid #e39fbf;
 }
 .quiz__box footer {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
