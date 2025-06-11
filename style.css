@@ -10,25 +10,34 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #dfe0f9;
-  color: aliceblue;
+  color: rgb(6, 131, 241);
 }
 
 .start__button,
-.info__box {
-  display: flex;
+.info__box,
+.quiz__box,
+.result__box {
+  /* display: flex; */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.start__button {
+  box-shadow: none;
+}
 .info__box {
   flex-direction: column;
   background-color: rgb(76, 0, 61);
-  width: fit-content;
+  color: #dfe0f9;
+  width: 600px;
+  z-index: 30;
   padding: 15px 30px;
   border-radius: 25px;
-  display: none;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
 }
 
 .info__box .info__title {
@@ -36,6 +45,7 @@ body {
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
+  padding: 0 30px;
   height: 60px;
   width: 100%;
   font-size: 20px;
@@ -74,7 +84,7 @@ body {
   width: 100px;
   border-radius: 20px;
   cursor: pointer;
-  transition: all 0.3 ease;
+  transition: all 0.3s ease;
 }
 
 .button button.button__quit {
@@ -91,7 +101,6 @@ body {
 .button button.button__restart:hover {
   background-color: rgb(0, 208, 90);
 }
-/* start quiz button styles */
 
 .start__button button {
   font-size: 25px;
@@ -101,7 +110,256 @@ body {
   border-radius: 25px;
   border: transparent;
   outline: none;
-  background-color: rgb(5, 31, 158);
+  background-color: rgb(98, 112, 179);
   cursor: pointer;
   color: aliceblue;
+}
+
+.quiz__box {
+  /* display: none; */
+  width: 550px;
+  background-color: rgb(168, 52, 235);
+  border-radius: 5px;
+  transform: translate(-50%, -50%) scale(0.9);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.quiz__box header {
+  position: relative;
+  z-index: 99;
+  height: 70px;
+  padding: 0 30px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.3);
+}
+
+.quiz__box header .title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.quiz__box header .timer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 145px;
+  height: 45px;
+  background-color: #dfe0f9;
+  border: 1px solid #b8daff;
+  border-radius: 5px;
+  padding: 0 8px;
+}
+
+.quiz__box header .timer .timer__text {
+  font-weight: 400;
+  font-size: 18px;
+  user-select: none;
+}
+
+.quiz__box header .timer .timer__sec {
+  font-size: 18px;
+  font-weight: 500;
+  background-color: rgb(84, 86, 177);
+  height: 30px;
+  width: 45px;
+  color: #b8daff;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 10px;
+  border: 1ps solid #597793;
+  user-select: none;
+}
+
+.quiz__box section {
+  padding: 25px 30px 20px 30px;
+  background-color: #dfe0f9;
+}
+
+.quiz__box section .que__text {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.quiz__box section .option__list {
+  padding: 20px 0;
+  display: block;
+}
+
+section .option__list .option {
+  background-color: aliceblue;
+  border: 1px solid #6caae4;
+  border-radius: 5px;
+  padding: 8px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+section .option__list .option:hover {
+  color: #1b0c8a;
+  background-color: aliceblue;
+  border-color: #b8daff;
+}
+
+.option__list .option:last-child {
+  margin-bottom: 0;
+}
+
+.option__list .option .icon {
+  height: 26px;
+  width: 26px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 14px;
+  line-height: 24px;
+  pointer-events: none;
+  position: relative;
+  z-index: 30;
+}
+
+.option__list .option .icon.tick {
+  border-color: rgb(38, 198, 20);
+  color: rgb(66, 238, 63);
+  background-color: aliceblue;
+}
+
+.option__list .option .icon.cross {
+  border-color: rgb(229, 12, 12);
+  /* color: rgb(251, 248, 248); */
+  background-color: rgb(246, 219, 219);
+}
+
+.quiz__box footer {
+  height: 60px;
+  width: 100%;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quiz__box footer .total__que span {
+  display: flex;
+  user-select: none;
+}
+
+.quiz__box footer .total__que span {
+  display: flex;
+  user-select: none;
+}
+
+footer .total__que span p {
+  font-weight: 500;
+  padding: 0 5px;
+}
+
+footer .total__que span p:first-child {
+  padding-left: 0;
+}
+
+footer .next__button {
+  height: 40px;
+  padding: 0 14px;
+  font-size: 18px;
+  font-weight: 400;
+  border: none;
+  outline: none;
+  color: #dfe0f9;
+  background-color: #368dde;
+  border-radius: 5px;
+  border: 1px solid #3b8dda;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+footer .next__button:hover {
+  background-color: #1b0c8a;
+}
+
+.result__box {
+  background-color: #840bb7;
+  color: aliceblue;
+  width: 450px;
+  padding: 25px 30px;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-between;
+  opacity: 0;
+}
+
+.result__box .icon {
+  font-size: 100px;
+  color: #368dde;
+  margin-bottom: 10px;
+}
+
+.result__box .icon img {
+  width: 300px;
+  height: 300px;
+}
+.result__box .complete__text {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.result__box .score__text span {
+  display: flex;
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.score__text span p {
+  font-weight: 600;
+  padding: 0 4px;
+}
+
+.result__box .button {
+  display: flex;
+  margin: 20px 0;
+}
+
+.result__box .button button {
+  margin: 0 10px;
+  height: 46px;
+  padding: 0 20px;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 25px;
+  border: 1px solid rgb(19, 68, 230);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button button.restart {
+  color: #fefefe;
+  background-color: #4c035e;
+  border: none;
+}
+
+.button button.restart:hover {
+  background-color: #e7e5f8;
+  color: #4c035e;
+}
+
+.button button.quit {
+  color: #4c035e;
+}
+
+.button button.quit:hover {
+  color: #ffffff;
+  background-color: #ff0cdf;
 }
