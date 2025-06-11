@@ -6,7 +6,6 @@
 }
 
 body {
-  /* background-image: url(/bcg.png); */
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #dfe0f9;
@@ -17,27 +16,42 @@ body {
 .info__box,
 .quiz__box,
 .result__box {
-  /* display: flex; */
+  opacity: 0;
+  z-index: -10;
   position: absolute;
+  outline: none;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .start__button {
+  opacity: 1;
+  z-index: 1;
+
   box-shadow: none;
+  cursor: pointer;
 }
+
+.info__box.activeInfo {
+  z-index: 25;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
 .info__box {
   flex-direction: column;
   background-color: rgb(76, 0, 61);
   color: #dfe0f9;
   width: 600px;
   z-index: 30;
-  padding: 15px 30px;
+  padding: 20px 40px;
   border-radius: 25px;
+  pointer-events: none;
   transform: translate(-50%, -50%) scale(0.9);
-  opacity: 0;
 }
 
 .info__box .info__title {
@@ -106,7 +120,7 @@ body {
   font-size: 25px;
   font-weight: 500;
   color: rgb(13, 30, 84);
-  padding: 15px 30px;
+  padding: 25px 40px;
   border-radius: 25px;
   border: transparent;
   outline: none;
@@ -116,13 +130,19 @@ body {
 }
 
 .quiz__box {
-  /* display: none; */
   width: 550px;
-  background-color: rgb(168, 52, 235);
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
   transform: translate(-50%, -50%) scale(0.9);
   pointer-events: none;
-  opacity: 0;
+}
+
+.quiz__box.activeQuiz {
+  z-index: 25;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
 }
 
 .quiz__box header {
@@ -237,7 +257,18 @@ section .option__list .option:hover {
   background-color: rgb(246, 219, 219);
 }
 
+.option__list .option.correct {
+  color: green;
+  background-color: #bbeaca;
+  border-color: #e7e5f8;
+}
+.option__list .option.incorrect {
+  color: rgb(211, 16, 16);
+  background-color: #ffb9b8;
+  border-color: #e7e5f8;
+}
 .quiz__box footer {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   height: 60px;
   width: 100%;
   padding: 0 30px;
@@ -285,7 +316,7 @@ footer .next__button:hover {
 }
 
 .result__box {
-  background-color: #840bb7;
+  background-color: #dfaaf6;
   color: aliceblue;
   width: 450px;
   padding: 25px 30px;
@@ -362,4 +393,7 @@ footer .next__button:hover {
 .button button.quit:hover {
   color: #ffffff;
   background-color: #ff0cdf;
+}
+.button button {
+  cursor: pointer;
 }
