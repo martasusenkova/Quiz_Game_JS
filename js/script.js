@@ -185,22 +185,17 @@ function showResultBox() {
 }
 
 function startTimer() {
-  const timeCount = quizBox.querySelector(".timer .timer__sec"); // ❗внутри функции
-  const timeOff = quizBox.querySelector("header .time__text");
-
-  if (!timeCount || !timeOff) {
-    console.error("❗ Элементы таймера не найдены в DOM.");
-    return;
-  }
-
-  clearInterval(counter);
-  time = 15;
-  timeCount.textContent = time;
+  clearInterval(counter); // Останавливаем предыдущий таймер
+  time = 15; // Сбрасываем время
+  timeCount.textContent = time; // Отображаем начальное время
 
   counter = setInterval(() => {
     time--;
-    timeCount.textContent = time < 10 ? "0" + time : time;
-
+    timeCount.textContent = time;
+    if (time < 9) {
+      let addZero = timeCount.textContent;
+      timeCount.textContent = "0" + addZero;
+    }
     if (time < 0) {
       clearInterval(counter);
       timeCount.textContent = "00";
@@ -210,9 +205,9 @@ function startTimer() {
       const allOptions = optionList.children;
 
       const tickIcon = `
-        <svg class="icon tick" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" viewBox="0 0 24 24">
-          <path d="M20.285 6.709l-11.285 11.292-5.285-5.292 1.414-1.414 3.871 3.878 9.871-9.878z"/>
-        </svg>`;
+    <svg class="icon tick" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" viewBox="0 0 24 24">
+      <path d="M20.285 6.709l-11.285 11.292-5.285-5.292 1.414-1.414 3.871 3.878 9.871-9.878z"/>
+    </svg>`;
 
       for (let i = 0; i < allOptions.length; i++) {
         const option = allOptions[i];
