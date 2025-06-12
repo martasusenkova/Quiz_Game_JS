@@ -5,12 +5,13 @@ const continueButton = infoBox.querySelector(".button__restart");
 const quizBox = document.querySelector(".quiz__box");
 const optionList = document.querySelector(".option__list");
 const timeCount = quizBox.querySelector(".timer .timer__sec");
-
+const timeLine = document.querySelector(".time__line");
 let queCount = 0;
 let queNumb = 1;
 let counter;
+let counterLine;
 let time = 15;
-
+let widthValue = 0;
 startButton.onclick = () => {
   infoBox.classList.add("activeInfo");
 };
@@ -27,6 +28,10 @@ continueButton.onclick = () => {
 };
 
 const nextButton = quizBox.querySelector(".next__button");
+const resultBox = document.querySelector(".result__box");
+const restartQuiz = resultBox.querySelector(".button .restart");
+const quitQuiz = resultBox.querySelector(".button .quit");
+
 nextButton.onclick = () => {
   if (queCount < questions.length - 1) {
     queCount++;
@@ -34,8 +39,13 @@ nextButton.onclick = () => {
     showQuestions(queCount);
     queCounter(queNumb);
     startTimer(15);
+    startTimerLine(0);
+    clearInterval(counterLine);
+    startTimerLine(widthValue);
+    nextButton.style.display = "none";
   } else {
     console.log("Questions completed");
+    showResultBox();
   }
 };
 
@@ -58,6 +68,8 @@ function showQuestions(index) {
 }
 
 function optionSelected(answer) {
+  clearInterval(counter);
+  clearInterval(counterLine);
   const correctAns = questions[queCount].answer;
   const allOptions = optionList.children;
 
@@ -101,6 +113,7 @@ function optionSelected(answer) {
 
   for (let i = 0; i < allOptions.length; i++) {
     allOptions[i].classList.add("disabled");
+    nextButton.style.display = "block";
   }
 
   optionList.classList.add("answered");
@@ -112,6 +125,12 @@ function queCounter(index) {
   bottomQuesCounter.innerHTML = totalQuesCountTag;
 }
 
+function showResultBox() {
+  infoBox.classList.remove("activeInfo");
+  quizBox.classList.remove("activeQuiz");
+  resultBox.classList.add("activeResult");
+}
+
 function startTimer() {
   clearInterval(counter); // Останавливаем предыдущий таймер
   time = 15; // Сбрасываем время
@@ -120,22 +139,56 @@ function startTimer() {
   counter = setInterval(() => {
     time--;
     timeCount.textContent = time;
-
+    if (time < 9) {
+      let addZero = timeCount.textContent;
+      timeCount.textContent = "0" + addZero;
+    }
     if (time < 0) {
       clearInterval(counter); // Останавливаем таймер на 0
-      timeCount.textContent = "0";
+      timeCount.textContent = "00";
     }
   }, 1000);
+}
+
+function startTimerLine(startWidth = 0) {
+  clearInterval(counterLine);
+  let currentWidth = startWidth;
+  const maxWidth = 550;
+
+  timeLine.style.width = "0px"; // обнуляем перед запуском
+
+  counterLine = setInterval(() => {
+    currentWidth += 1;
+    timeLine.style.width = currentWidth + "px";
+
+    if (currentWidth >= maxWidth) {
+      clearInterval(counterLine);
+    }
+  }, 29); // 29 мс — даёт примерно 15 секунд общей длительности
 }
 
 // Первый запуск таймера
 startTimer();
 // При клике на кнопку "Next Question"
-continueButton.addEventListener("click", () => {
-  startTimer();
-});
+continueButton.onclick = () => {
+  infoBox.classList.remove("activeInfo");
+  quizBox.classList.add("activeQuiz");
+  showQuestions(queCount);
+  queCounter(queNumb);
+  startTimer(); // ✅ запускаем таймер
+  startTimerLine(0); // ✅ запускаем полосу времени
+};
 
-nextBtn.addEventListener("click", () => {
-  startTimer(); // Заново запускаем таймер
-  // Здесь можешь вызвать свою функцию, которая показывает следующий вопрос
-});
+nextButton.onclick = () => {
+  if (queCount < questions.length - 1) {
+    queCount++;
+    queNumb++;
+    showQuestions(queCount);
+    queCounter(queNumb);
+    startTimer();
+    startTimerLine(0);
+  } else {
+    console.log("Questions completed");
+    showResultBox();
+  }
+};

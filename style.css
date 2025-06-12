@@ -41,6 +41,13 @@ body {
   opacity: 1;
 }
 
+.result__box.activeResult {
+  z-index: 25;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
 .info__box {
   flex-direction: column;
   background-color: rgb(76, 0, 61);
@@ -195,6 +202,13 @@ body {
   user-select: none;
 }
 
+.quiz__box header .time__line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-color: rgb(98, 112, 179);
+}
 .quiz__box section {
   padding: 25px 30px 20px 30px;
   background-color: #dfe0f9;
@@ -306,6 +320,7 @@ footer .total__que span p:first-child {
 }
 
 footer .next__button {
+  display: none;
   height: 40px;
   padding: 0 14px;
   font-size: 18px;
