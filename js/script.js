@@ -195,6 +195,8 @@ function startTimer() {
     }
     if (time < 0) {
       clearInterval(counter);
+      clearInterval(counterLine);
+
       timeCount.textContent = "00";
       timerText.textContent = "Time off";
       const correctAns = questions[queCount].answer;
@@ -225,7 +227,7 @@ function startTimerLine(startWidth = 0) {
   let currentWidth = startWidth;
   const maxWidth = 550;
 
-  timeLine.style.width = "0px"; // обнуляем перед запуском
+  timeLine.style.width = "0";
 
   counterLine = setInterval(() => {
     currentWidth += 1;
@@ -234,18 +236,17 @@ function startTimerLine(startWidth = 0) {
     if (currentWidth >= maxWidth) {
       clearInterval(counterLine);
     }
-  }, 29); // 29 мс — даёт примерно 15 секунд общей длительности
+  }, 29);
 }
 
-// Первый запуск таймера
 // При клике на кнопку "Next Question"
 continueButton.onclick = () => {
   infoBox.classList.remove("activeInfo");
   quizBox.classList.add("activeQuiz");
   showQuestions(queCount);
   queCounter(queNumb);
-  startTimer(); // ✅ запускаем таймер
-  startTimerLine(0); // ✅ запускаем полосу времени
+  startTimer(); //  запускаем таймер
+  startTimerLine(0); // запускаем полосу времени
 };
 
 nextButton.onclick = () => {
