@@ -5,8 +5,14 @@ const continueButton = infoBox.querySelector(".button__restart");
 const quizBox = document.querySelector(".quiz__box");
 const optionList = document.querySelector(".option__list");
 const timeCount = quizBox.querySelector(".timer .timer__sec");
+const timerText = quizBox.querySelector(".timer .timer__text");
 const timeLine = document.querySelector(".time__line");
-const timeOff = quizBox.querySelector("header .time__text");
+const nextButton = quizBox.querySelector(".next__button");
+const resultBox = document.querySelector(".result__box");
+const restartQuiz = resultBox.querySelector(".button .restart");
+const quitQuiz = resultBox.querySelector(".button .quit");
+const timeOff = document.querySelector("#timeOff");
+
 let queCount = 0;
 let queNumb = 1;
 let counter;
@@ -23,18 +29,6 @@ quitButton.onclick = () => {
   infoBox.classList.remove("activeInfo");
 };
 
-// continueButton.onclick = () => {
-//   infoBox.classList.remove("activeInfo");
-//   quizBox.classList.add("activeQuiz");
-//   showQuestions(queCount);
-//   queCounter(queNumb);
-// };
-
-const nextButton = quizBox.querySelector(".next__button");
-const resultBox = document.querySelector(".result__box");
-const restartQuiz = resultBox.querySelector(".button .restart");
-const quitQuiz = resultBox.querySelector(".button .quit");
-
 quitQuiz.onclick = () => {
   window.location.reload();
 };
@@ -42,7 +36,10 @@ quitQuiz.onclick = () => {
 restartQuiz.onclick = () => {
   quizBox.classList.add("activeQuiz");
   resultBox.classList.remove("activeResult");
+  resetQuiz();
+};
 
+function resetQuiz() {
   queCount = 0;
   queNumb = 1;
   time = 15;
@@ -58,7 +55,7 @@ restartQuiz.onclick = () => {
 
   nextButton.style.display = "none";
   timeOff.textContent = "Time left";
-};
+}
 
 function showQuestions(index) {
   const queText = document.querySelector(".que__text");
@@ -133,7 +130,7 @@ function optionSelected(answer) {
 
 function queCounter(index) {
   const bottomQuesCounter = quizBox.querySelector(".total__que");
-  let totalQuesCountTag = `<span><p>${index}</p>of<p>${questions.length}</p>Questions</span>`;
+  let totalQuesCountTag = `Вопрос ${index} из ${questions.length}`;
   bottomQuesCounter.innerHTML = totalQuesCountTag;
 }
 
@@ -199,8 +196,7 @@ function startTimer() {
     if (time < 0) {
       clearInterval(counter);
       timeCount.textContent = "00";
-      timeOff.textContent = "Time off";
-
+      timerText.textContent = "Time off";
       const correctAns = questions[queCount].answer;
       const allOptions = optionList.children;
 
