@@ -4,37 +4,37 @@ A simple interactive quiz built with JavaScript and a countdown timer. The user 
 
 ## 🚀 Features
 
-* One question displayed at a time
-* "Continue" button to start the quiz
-* "Next Question" button to proceed
-* 15-second timer per question
-* Timer stops when time is up
-* Timer resets for each new question
+- One question displayed at a time
+- "Continue" button to start the quiz
+- "Next Question" button to proceed
+- 15-second timer per question
+- Timer stops when time is up
+- Timer resets for each new question
 
 ## 🛠️ Technologies Used
 
-* **HTML** – structure
-* **CSS / SCSS** – styling and responsiveness
-* **JavaScript** – app logic, timer, question navigation
-
+- **HTML** – structure
+- **CSS ** – styling and responsiveness
+- **JavaScript** – app logic, timer, question navigation
 
 ## 📸 Screenshots
-__later 
+
+![Quiz Screenshot](images/screen.png)
+![Quiz Screenshot](images/screen2.png)
 
 ## ✨ Possible Improvements
 
-* Score calculation and result summary
-* Show correct answer after each question
-* Timer progress bar
-* Smooth animations
-* Save high scores in `localStorage`
+- Score calculation and result summary
+- Show correct answer after each question
+- Timer progress bar
+- Smooth animations
+- Save high scores in `localStorage`
 
 ## 📚 Learning Goals
 
 This project helps you practice:
 
-* DOM manipulation
-* Using `setInterval` and `clearInterval`
-* Organizing JS logic and event handling
-* Basic UI/UX implementation
-
+- DOM manipulation
+- Using `setInterval` and `clearInterval`
+- Organizing JS logic and event handling
+- Basic UI/UX implementation
