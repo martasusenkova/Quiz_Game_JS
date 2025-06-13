@@ -130,7 +130,7 @@ function optionSelected(answer) {
 
 function queCounter(index) {
   const bottomQuesCounter = quizBox.querySelector(".total__que");
-  let totalQuesCountTag = `Вопрос ${index} из ${questions.length}`;
+  let totalQuesCountTag = `Question ${index} of ${questions.length}`;
   bottomQuesCounter.innerHTML = totalQuesCountTag;
 }
 
